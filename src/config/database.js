@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const connectDB = async () => {
-  await mongoose.connect(
-    "mongodb+srv://sanjal:sanjal2004@cluster0.b3gog.mongodb.net/healthCare-app"
-  );
+  await mongoose.connect(process.env.MONGO_URI);
 };
  module.exports = connectDB;

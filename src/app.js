@@ -17,11 +17,20 @@ app.use(cors({
 // routes
 const authRouter = require("./routes/authentication");
 const profileRouter = require("./routes/profile");
-
+const appointmentRouter = require("./routes/appointment");
+const reportRouter = require("./routes/report");
+const adminRouter = require("./routes/admin");
+const prescriptionRouter = require("./routes/prescription");
+const patientRouter = require("./routes/patient");
 
 // using routes
 app.use("/", authRouter);
 app.use("/", profileRouter);
+app.use("/", appointmentRouter);
+app.use("/", reportRouter);
+app.use("/", adminRouter);
+app.use("/", prescriptionRouter);
+app.use("/", patientRouter);
 
 
 

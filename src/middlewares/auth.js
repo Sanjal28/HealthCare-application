@@ -1,5 +1,6 @@
 const jwt=require("jsonwebtoken");
 const User=require("../models/user");
+require("dotenv").config();
 
 const userAuth=async(req,res,next)=>{
     // middleware to check if user is authenticated
@@ -8,7 +9,7 @@ const userAuth=async(req,res,next)=>{
         if(!token){
             return res.status(401).send("Please login");
         }
-        const decodedObj=await jwt.verify(token,"sanjal@20042004");
+        const decodedObj=await jwt.verify(token,process.env.JWT_SECRET);
         const {_id}=decodedObj;
         const user=await User.findById(_id);
         if(!user){
@@ -20,4 +21,11 @@ const userAuth=async(req,res,next)=>{
         res.status(400).send("ERROR: "+err.message);
     }
 } 
-module.exports={userAuth};
+
+
+const roleAuth = (roles) => (req, res, next) => {
+    if (!roles.includes(req.user.role)) return res.status(403).send("Access denied");
+    next();
+  };
+
+module.exports={userAuth,roleAuth};

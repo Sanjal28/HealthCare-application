@@ -7,7 +7,7 @@ const {validateSignUpData} = require("../utils/validate");
 
 // signup user
 authRouter.post("/signup", async (req, res) => {
-  const { firstName, lastName, emailId, password, phone } = req.body;
+  const { firstName, lastName, emailId, password, phone, role} = req.body;
   try {
     // validating the user data
     validateSignUpData(req);
@@ -22,7 +22,7 @@ authRouter.post("/signup", async (req, res) => {
       emailId,
       password: passwordHash,
       phone,
-
+      role,
     });
 
     await user.save();
