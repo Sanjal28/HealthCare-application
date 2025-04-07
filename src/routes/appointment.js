@@ -16,17 +16,17 @@ appointmentRouter.post("/book", userAuth, roleAuth(["Patient"]), async (req, res
 });
 
 appointmentRouter.get("/my", userAuth, async (req, res) => {
-    try {
-      const userId = req.user._id;
-      const appointments = await Appointment.find({
-        $or: [{ patientId: userId }, { doctorId: userId }],
-      }).populate("patientId doctorId", "firstName lastName");
-  
-      res.send(appointments);
-    } catch (err) {
-      res.status(400).send("Error: " + err.message);
-    }
-  });
+  try {
+    const userId = req.user._id;
+    const appointments = await Appointment.find({
+      $or: [{ patientId: userId }, { doctorId: userId }],
+    }).populate("patientId doctorId", "firstName lastName");
+
+    res.send(appointments);
+  } catch (err) {
+    res.status(400).send("Error: " + err.message);
+  }
+});
 
 appointmentRouter.patch("/approve/:appointmentId", userAuth, roleAuth(["Doctor"]), async (req, res) => {
   try {
@@ -50,7 +50,5 @@ appointmentRouter.patch("/approve/:appointmentId", userAuth, roleAuth(["Doctor"]
     res.status(400).send("Error: " + err.message);
   }
 });
-
-
 
 module.exports = appointmentRouter;
